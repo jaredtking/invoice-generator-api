@@ -13,13 +13,16 @@ Simple HTTP API to create invoice PDFs.
 
 We created a simple API at Invoiced to generate invoice PDFs on the fly. This service has been used internally by us for some time. We believe this could be helpful in your project as well.
 
-The API only has a single endpoint that returns a PDF. We don't store any of your invoice data.
+The API has a primary endpoint that returns a PDF given details of an invoice. We don't store any of your invoice data.
+
+In addition to PDF, the API can also generate e-Invoices in UBL (Universal Business Language) with the invoice PDF embedded. This is useful as the world shifts to e-Invoicing because UBL invoices are tricky to generate.
 
 ### Use Cases
 - Creating invoices for VAT compliance
 - Generate a PDF of an invoice that you have the details to (recipieint, line items, etc)
 - Produce invoices for B2B buyers from an order or receipt
 - Selling products or services on credit terms
+- Creating e-Invoices in UBL (Universal Business Language)
 
 ### Endpoint
 
@@ -119,6 +122,28 @@ curl https://invoice-generator.com \
 > invoice.custom_fields.pdf
 ```
 
+### e-Invoice Example
+
+Here's a simple cURL example for generating invoices in UBL XML:
+
+```
+curl https://invoice-generator.com/ubl \
+  -d from="Invoiced, Inc.%0AVAT ID: 1234" \
+  -d to="Jared%0AVAT ID: 4567" \
+  -d logo="https://invoiced.com/img/logo-invoice.png" \
+  -d number=1 \
+  -d date="Feb 9, 2015" \
+  -d date="Mar 9, 2015" \
+  -d payment_terms="NET 30" \
+  -d "items[0][name]"="Starter Plan Monthly" \
+  -d "items[0][quantity]"=1 \
+  -d "items[0][unit_cost]"=99 \
+  -d tax_title="VAT" \
+  -d "fields[tax]"="%" \
+  -d tax=8 \
+  -d notes="Thanks for being an awesome customer!" \
+> invoice.xml
+```
 #### Supported Languages
 
 We currently have translations available in:
