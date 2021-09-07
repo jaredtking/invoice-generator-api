@@ -4,6 +4,7 @@ Simple HTTP API to create invoice PDFs.
 - [About](#about)
 - [Getting Started](#getting-started)
 - [Sample Projects](#sample-projects)
+- [Examples](#examples)
 - [API Reference](#api-reference)
 - [Rate Limiting](#rate-limiting)
 - [Support](#support)
