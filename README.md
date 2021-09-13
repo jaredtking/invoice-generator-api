@@ -1,44 +1,42 @@
 # Invoice Generator API
-Simple HTTP API to create invoice PDFs.
-
-- [About](#about)
-- [Getting Started](#getting-started)
-- [Sample Projects](#sample-projects)
-- [Examples](#examples)
-- [API Reference](#api-reference)
-- [Rate Limiting](#rate-limiting)
-- [Support](#support)
-- [Terms of Use and Privacy Policy](#terms-of-use-and-privacy-policy)
-
-## About
 
 We created a simple API at Invoiced to generate invoice PDFs on the fly. This service has been used internally by us for some time. We believe this could be helpful in your project as well.
 
 The API has a primary endpoint that returns a PDF given details of an invoice. We don't store any of your invoice data.
 
-In addition to PDF, the API can also generate e-Invoices in UBL (Universal Business Language) with the invoice PDF embedded. This is useful as the world shifts to e-Invoicing because UBL invoices are tricky to generate.
+In addition to PDF, the API can also generate e-invoices in UBL (Universal Business Language) with the invoice PDF embedded. This is useful as the world shifts to e-invoicing because UBL invoices are tricky to generate.
 
 ### Use Cases
 - Creating invoices for VAT compliance
-- Generate a PDF of an invoice that you have the details to (recipieint, line items, etc)
+- Generate a PDF of an invoice that you have the details to (recipient, line items, etc)
 - Produce invoices for B2B buyers from an order or receipt
 - Selling products or services on credit terms
-- Creating e-Invoices in UBL (Universal Business Language)
+- Creating e-invoices in UBL (Universal Business Language)
 
-### Endpoint
+## Table of Contents
 
-```
-https://invoice-generator.com
-```
+- [Examples](#examples)
+  - [Simple Invoice](#simple-invoice)
+  - [JSON Input](#json-input)
+  - [VAT Invoice](#vat-invoice)
+  - [Localization](#localization)
+  - [Custom Fields](#custom-fields)
+  - [E-invoice](#e-invoice)
+  - [Sample Projects](#sample-projects)
+- [API Reference](#api-reference)
+  - [Create Invoice PDF](#create-invoice-pdf)
+  - [Create E-invoice](#create-e-invoice)
+- [Rate Limiting](#rate-limiting)
+- [Support](#support)
 
 ## Examples
 
-### Getting Started
+### Simple Invoice
 
-```
+```bash
 curl https://invoice-generator.com \
   -d from="Invoiced, Inc." \
-  -d to="Parag" \
+  -d to="Acme, Corp." \
   -d logo="https://invoiced.com/img/logo-invoice.png" \
   -d number=1 \
   -d date="Feb 9, 2015" \
@@ -51,22 +49,11 @@ curl https://invoice-generator.com \
 > invoice.pdf
 ```
 
-### JSON Input
-
-JSON input is also accepted with the `Content-Type` header set to `application/json`
-
-```
-curl https://invoice-generator.com \
-  -H "Content-Type: application/json" \
-  -d '{"from":"Invoiced, Inc.","to":"Parag","logo":"https://invoiced.com/img/logo-invoice.png","number":1,"items":[{"name":"Starter plan","quantity":1,"unit_cost":99}],"notes":"Thanks for your business!"}' \
-> invoice.pdf
-```
-
-### VAT Example
+### VAT Invoice
 
 Here's a simple cURL example for generating invoices with VAT:
 
-```
+```bash
 curl https://invoice-generator.com \
   -d from="Invoiced, Inc.%0AVAT ID: 1234" \
   -d to="Jared%0AVAT ID: 4567" \
@@ -85,11 +72,22 @@ curl https://invoice-generator.com \
 > invoice.vat.pdf
 ```
 
+### JSON Input
+
+JSON input is also accepted with the `Content-Type` header set to `application/json`
+
+```bash
+curl https://invoice-generator.com \
+  -H "Content-Type: application/json" \
+  -d '{"from":"Invoiced, Inc.","to":"Acme, Corp.","logo":"https://invoiced.com/img/logo-invoice.png","number":1,"items":[{"name":"Starter plan","quantity":1,"unit_cost":99}],"notes":"Thanks for your business!"}' \
+> invoice.pdf
+```
+
 ### Localization
 
 It is possible to change the localization used to generate the invoice by supplying a locale in the `Accept-Language` header. The default locale is `en-US`.
 
-```
+```bash
 curl https://invoice-generator.com \
   -H "Accept-Language: fr-FR" \
   -d from="Invoiced, Inc." \
@@ -105,9 +103,13 @@ curl https://invoice-generator.com \
 > invoice.pdf
 ```
 
+#### Supported Languages
+
+We currently have translations available in English, French, German, Spanish, and Thai.
+
 ### Custom Fields
 
-```
+```bash
 curl https://invoice-generator.com \
   -d from="Invoiced, Inc." \
   -d to="My Customer" \
@@ -123,11 +125,11 @@ curl https://invoice-generator.com \
 > invoice.custom_fields.pdf
 ```
 
-### e-Invoice Example
+### E-invoice
 
-Here's a simple cURL example for generating invoices in UBL XML:
+Here's a simple cURL example for generating e-invoices in UBL XML:
 
-```
+```bash
 curl https://invoice-generator.com/ubl \
   -d from="Invoiced, Inc.%0AVAT ID: 1234" \
   -d to="Jared%0AVAT ID: 4567" \
@@ -145,14 +147,6 @@ curl https://invoice-generator.com/ubl \
   -d notes="Thanks for being an awesome customer!" \
 > invoice.xml
 ```
-#### Supported Languages
-
-We currently have translations available in:
-- English
-- French
-- German
-- Spanish
-- Thai
 
 ### Sample Projects
 
@@ -162,9 +156,17 @@ We currently have translations available in:
 - PHP: [generate invoices programmatically](https://github.com/concept-core/Invoiced)
 - Python: [python-invoice-generator](https://github.com/aleaforny/python-invoice-generator)
 
+************
+
 ## API Reference
 
-### Invoice
+### Create Invoice PDF
+
+```text
+POST https://invoice-generator.com
+```
+
+#### Invoice Parameters
 
 When a value is null or zero, the field will not be shown on the invoice. The exception to this are the required fields `from`, `to`, `date`, and `items`.
 
@@ -189,7 +191,7 @@ When a value is null or zero, the field will not be shown on the invoice. The ex
 `notes`|Notes - any extra information not included elsewhere|*null*
 `terms`|Terms and conditions - all the details|*null*
 
-### Line Items
+#### Line Item Parameters
 
 Line items are represented as an array of objects. Here's an example:
 
@@ -201,7 +203,7 @@ Line items are represented as an array of objects. Here's an example:
       "quantity": 10,
       "unit_cost": 99.99,
       "description": "The best gizmos there are around."
-    }
+    },
     {
       "name": "Gizmo v2",
       "quantity": 5,
@@ -211,7 +213,7 @@ Line items are represented as an array of objects. Here's an example:
 }
 ```
 
-### Subtotal Lines
+#### Subtotal Line Parameters
 
 The `fields` object toggles the `discounts`, `tax`, and `shipping` subtotal lines. Each setting can have a value of `%`, `true`, or `false`. For example to add a percent tax rate and flat shipping to your invoice you would send this:
 
@@ -227,7 +229,7 @@ The `fields` object toggles the `discounts`, `tax`, and `shipping` subtotal line
 }
 ```
 
-### Custom Fields
+#### Custom Field Parameters
 
 Custom fields allow you to add additional fields to the invoice details in the top-right. Here's an example:
 
@@ -246,9 +248,9 @@ Custom fields allow you to add additional fields to the invoice details in the t
 }
 ```
 
-### Invoice Template
+#### Invoice Template Parameters
 
-These parameters control the titles of the fields on the invoice template.
+These parameters control the titles of the fields on the invoice template. If localization is used, the default values are translated to the specified language. Any invoice template parameter given will override the localized default. 
 
 |Parameter|Default Value
 |:--------|:------------
@@ -274,14 +276,22 @@ These parameters control the titles of the fields on the invoice template.
 `terms_title`|Terms
 `notes_title`|Notes
 
+### Create E-invoice
+
+```text
+POST https://invoice-generator.com/ubl
+```
+
+#### Parameters
+
+Creating an invoice with universal business language uses the same parameters as the [Create Invoice PDF](#create-invoice-pdf) endpoint.
+
 ## Rate Limiting
 
 The invoice-generator.com API is rate limited. With almost every use case this should not be an issue. If an API call does trigger rate limiting then we will respond with a `429` status code to let you know to try generating your invoice again later. If you frequently run into these limits then you might also consider using our paid service at [invoiced.com](https://invoiced.com).
 
 ## Support
 
-Have a feature request or bug report? We would love to hear your thoughts! You can [create an issue](https://github.com/Invoiced/invoice-generator-api/issues) on GitHub for any issues you encounter or feature requests. If the matter is more private you can reach us at hello@invoiced.com.
-
-## Terms of Use and Privacy Policy
+Have a feature request or bug report? We would love to hear your thoughts! You can [create an issue](https://github.com/Invoiced/invoice-generator-api/issues) on GitHub for any issues you encounter or feature requests.
 
 Using invoice-generator.com is subject to the [Privacy Policy and Terms of Use](https://invoice-generator.com/terms).
