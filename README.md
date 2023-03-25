@@ -1,6 +1,6 @@
 # Invoice Generator API
 
-We created a simple API at Invoiced to generate invoice PDFs on the fly. This service has been used internally by us for some time. We believe this could be helpful in your project as well.
+We created a simple API at Invoice-Generator.com to generate invoice PDFs on the fly. This service has been used internally by us for some time. We believe this could be helpful in your project as well.
 
 The API has a primary endpoint that returns a PDF given details of an invoice. We don't store any of your invoice data.
 
@@ -26,7 +26,6 @@ In addition to PDF, the API can also generate e-invoices in UBL (Universal Busin
 - [API Reference](#api-reference)
   - [Create Invoice PDF](#create-invoice-pdf)
   - [Create E-invoice](#create-e-invoice)
-- [Rate Limiting](#rate-limiting)
 - [Support](#support)
 
 ## Examples
@@ -35,9 +34,9 @@ In addition to PDF, the API can also generate e-invoices in UBL (Universal Busin
 
 ```bash
 curl https://invoice-generator.com \
-  -d from="Invoiced, Inc." \
+  -d from="Nikolaus Ltd" \
   -d to="Acme, Corp." \
-  -d logo="https://invoiced.com/img/logo-invoice.png" \
+  -d logo="https://example.com/img/logo-invoice.png" \
   -d number=1 \
   -d date="Feb 9, 2015" \
   -d due_date="Feb 16, 2015" \
@@ -55,9 +54,9 @@ Here's a simple cURL example for generating invoices with VAT:
 
 ```bash
 curl https://invoice-generator.com \
-  -d from="Invoiced, Inc.%0AVAT ID: 1234" \
-  -d to="Jared%0AVAT ID: 4567" \
-  -d logo="https://invoiced.com/img/logo-invoice.png" \
+  -d from="Nikolaus Ltd%0AVAT ID: 1234" \
+  -d to="Foster Moen%0AVAT ID: 4567" \
+  -d logo="https://example.com/img/logo-invoice.png" \
   -d number=1 \
   -d date="Feb 9, 2015" \
   -d payment_terms="Charged - Do Not Pay" \
@@ -79,7 +78,7 @@ JSON input is also accepted with the `Content-Type` header set to `application/j
 ```bash
 curl https://invoice-generator.com \
   -H "Content-Type: application/json" \
-  -d '{"from":"Invoiced, Inc.","to":"Acme, Corp.","logo":"https://invoiced.com/img/logo-invoice.png","number":1,"items":[{"name":"Starter plan","quantity":1,"unit_cost":99}],"notes":"Thanks for your business!"}' \
+  -d '{"from":"Nikolaus Ltd","to":"Acme, Corp.","logo":"https://example.com/img/logo-invoice.png","number":1,"items":[{"name":"Starter plan","quantity":1,"unit_cost":99}],"notes":"Thanks for your business!"}' \
 > invoice.pdf
 ```
 
@@ -90,9 +89,9 @@ It is possible to change the localization used to generate the invoice by supply
 ```bash
 curl https://invoice-generator.com \
   -H "Accept-Language: fr-FR" \
-  -d from="Invoiced, Inc." \
+  -d from="Nikolaus Ltd" \
   -d to="Acme Corp." \
-  -d logo="https://invoiced.com/img/logo-invoice.png" \
+  -d logo="https://example.com/img/logo-invoice.png" \
   -d number=1 \
   -d currency=eur \
   -d date="Feb 9, 2015" \
@@ -111,10 +110,10 @@ We currently have translations available in English, French, German, Spanish, an
 
 ```bash
 curl https://invoice-generator.com \
-  -d from="Invoiced, Inc." \
+  -d from="Nikolaus Ltd" \
   -d to="My Customer" \
   -d ship_to="Shipping Address" \
-  -d logo="https://invoiced.com/img/logo-invoice.png" \
+  -d logo="https://example.com/img/logo-invoice.png" \
   -d number=1 \
   -d date="Feb 9, 2015" \
   -d custom_fields[0][name]="My Custom Field" \
@@ -131,9 +130,9 @@ Here's a simple cURL example for generating e-invoices in UBL XML:
 
 ```bash
 curl https://invoice-generator.com/ubl \
-  -d from="Invoiced, Inc.%0AVAT ID: 1234" \
-  -d to="Jared%0AVAT ID: 4567" \
-  -d logo="https://invoiced.com/img/logo-invoice.png" \
+  -d from="Nikolaus Ltd%0AVAT ID: 1234" \
+  -d to="Foster Moen%0AVAT ID: 4567" \
+  -d logo="https://example.com/img/logo-invoice.png" \
   -d number=1 \
   -d date="Feb 9, 2015" \
   -d date="Mar 9, 2015" \
@@ -150,10 +149,9 @@ curl https://invoice-generator.com/ubl \
 
 ### Sample Projects
 
-- Go: [generate invoices programmatically](https://github.com/Invoiced/go-invoice-generator-connector)
-- Ruby: [generate invoices from Stripe webhooks](https://github.com/Invoiced/ruby-stripe-invoice-generator)
-- Node.js: [invoice-generator.js](https://github.com/Invoiced/invoice-generator.js)
-- PHP: [generate invoices programmatically](https://github.com/concept-core/Invoiced)
+- Go: [generate invoices programmatically](https://github.com/Invoice-Generator/go-invoice-generator-connector)
+- Ruby: [generate invoices from Stripe webhooks](https://github.com/Invoice-Generator/ruby-stripe-invoice-generator)
+- Node.js: [invoice-generator.js](https://github.com/Invoice-Generator/invoice-generator.js)
 - Python: [python-invoice-generator](https://github.com/aleaforny/python-invoice-generator)
 
 ************
@@ -286,12 +284,8 @@ POST https://invoice-generator.com/ubl
 
 Creating an invoice with universal business language uses the same parameters as the [Create Invoice PDF](#create-invoice-pdf) endpoint.
 
-## Rate Limiting
-
-The invoice-generator.com API is rate limited. With almost every use case this should not be an issue. If an API call does trigger rate limiting then we will respond with a `429` status code to let you know to try generating your invoice again later. If you frequently run into these limits then you might also consider using our paid service at [invoiced.com](https://invoiced.com).
-
 ## Support
 
-Have a feature request or bug report? We would love to hear your thoughts! You can [create an issue](https://github.com/Invoiced/invoice-generator-api/issues) on GitHub for any issues you encounter or feature requests.
+Have a feature request or bug report? We would love to hear your thoughts! You can [create an issue](https://github.com/Invoice-Generator/invoice-generator-api/issues) on GitHub for any issues you encounter or feature requests.
 
 Using invoice-generator.com is subject to the [Privacy Policy and Terms of Use](https://invoice-generator.com/terms).
