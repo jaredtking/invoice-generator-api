@@ -15,6 +15,7 @@ In addition to PDF, the API can also generate e-invoices in UBL (Universal Busin
 
 ## Table of Contents
 
+- [Getting Started](#getting-started)
 - [Examples](#examples)
   - [Simple Invoice](#simple-invoice)
   - [JSON Input](#json-input)
@@ -27,6 +28,16 @@ In addition to PDF, the API can also generate e-invoices in UBL (Universal Busin
   - [Create Invoice PDF](#create-invoice-pdf)
   - [Create E-invoice](#create-e-invoice)
 - [Support](#support)
+
+## Getting Started
+
+In order to begin using the Invoice-Generator.com API, you first need to create an API key. The process for obtaining an API key is as follows.
+
+1. Create a free Invoice-Generator.com account [here](https://invoice-generator.com/signup), or sign in if you already have one.
+2. Go to the **Settings** page.
+3. In the "API Keys" section, click **New API Key**.
+
+Now you have an API key and are ready to start invoicing!
 
 ## Examples
 
@@ -248,7 +259,7 @@ Custom fields allow you to add additional fields to the invoice details in the t
 
 #### Invoice Template Parameters
 
-These parameters control the titles of the fields on the invoice template. If localization is used, the default values are translated to the specified language. Any invoice template parameter given will override the localized default. 
+These parameters control the titles of the fields on the invoice template. If localization is used, the default values are translated to the specified language. Any invoice template parameter given will override the localized default.
 
 |Parameter|Default Value
 |:--------|:------------
