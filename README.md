@@ -40,10 +40,10 @@ curl https://invoice-generator.com \
   -d number=1 \
   -d date="Feb 9, 2015" \
   -d due_date="Feb 16, 2015" \
-  -d items[0][name]="Starter plan monthly" \
-  -d items[0][quantity]=1 \
-  -d items[0][unit_cost]=99 \
-  -d notes="Thanks for being an awesome customer!" \
+  -d "items[0][name]"="Starter plan monthly" \
+  -d "items[0][quantity]"=1 \
+  -d "items[0][unit_cost]"=99 \
+  -d notes="Thanks for being an awesome customer\!" \
   -d terms="Please pay by the due date." \
 > invoice.pdf
 ```
@@ -60,13 +60,13 @@ curl https://invoice-generator.com \
   -d number=1 \
   -d date="Feb 9, 2015" \
   -d payment_terms="Charged - Do Not Pay" \
-  -d items[0][name]="Starter Plan Monthly" \
-  -d items[0][quantity]=1 \
-  -d items[0][unit_cost]=99 \
+  -d "items[0][name]"="Starter Plan Monthly" \
+  -d "items[0][quantity]"=1 \
+  -d "items[0][unit_cost]"=99 \
   -d tax_title="VAT" \
-  -d fields[tax]="%" \
+  -d "fields[tax]"="%" \
   -d tax=8 \
-  -d notes="Thanks for being an awesome customer!" \
+  -d notes="Thanks for being an awesome customer\!" \
   -d terms="No need to submit payment. You will be auto-billed for this invoice." \
 > invoice.vat.pdf
 ```
@@ -96,9 +96,9 @@ curl https://invoice-generator.com \
   -d currency=eur \
   -d date="Feb 9, 2015" \
   -d due_date="Feb 16, 2015" \
-  -d items[0][name]="Starter plan monthly" \
-  -d items[0][quantity]=1 \
-  -d items[0][unit_cost]=99 \
+  -d "items[0][name]"="Starter plan monthly" \
+  -d "items[0][quantity]"=1 \
+  -d "items[0][unit_cost]"=99 \
 > invoice.pdf
 ```
 
@@ -116,11 +116,11 @@ curl https://invoice-generator.com \
   -d logo="https://example.com/img/logo-invoice.png" \
   -d number=1 \
   -d date="Feb 9, 2015" \
-  -d custom_fields[0][name]="My Custom Field" \
-  -d custom_fields[0][value]="Some Value" \
-  -d items[0][name]="Starter Plan Monthly" \
-  -d items[0][quantity]=1 \
-  -d items[0][unit_cost]=99 \
+  -d "custom_fields[0][name]"="My Custom Field" \
+  -d "custom_fields[0][value]"="Some Value" \
+  -d "items[0][name]"="Starter Plan Monthly" \
+  -d "items[0][quantity]"=1 \
+  -d "items[0][unit_cost]"=99 \
 > invoice.custom_fields.pdf
 ```
 
@@ -143,7 +143,7 @@ curl https://invoice-generator.com/ubl \
   -d tax_title="VAT" \
   -d "fields[tax]"="%" \
   -d tax=8 \
-  -d notes="Thanks for being an awesome customer!" \
+  -d notes="Thanks for being an awesome customer\!" \
 > invoice.xml
 ```
 
@@ -237,7 +237,7 @@ Custom fields allow you to add additional fields to the invoice details in the t
     {
       "name": "Gizmo",
       "value": "PO-1234"
-    }
+    },
     {
       "name": "Account Number",
       "value": "CUST-456"
