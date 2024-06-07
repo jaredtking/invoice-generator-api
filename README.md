@@ -45,6 +45,7 @@ Now you have an API key and are ready to start invoicing!
 
 ```bash
 curl https://invoice-generator.com \
+  -H "Authorization: Bearer myApiKey" \
   -d from="Nikolaus Ltd" \
   -d to="Acme, Corp." \
   -d logo="https://example.com/img/logo-invoice.png" \
@@ -65,6 +66,7 @@ Here's a simple cURL example for generating invoices with VAT:
 
 ```bash
 curl https://invoice-generator.com \
+  -H "Authorization: Bearer myApiKey" \
   -d from="Nikolaus Ltd%0AVAT ID: 1234" \
   -d to="Foster Moen%0AVAT ID: 4567" \
   -d logo="https://example.com/img/logo-invoice.png" \
@@ -88,6 +90,7 @@ JSON input is also accepted with the `Content-Type` header set to `application/j
 
 ```bash
 curl https://invoice-generator.com \
+  -H "Authorization: Bearer myApiKey" \
   -H "Content-Type: application/json" \
   -d '{"from":"Nikolaus Ltd","to":"Acme, Corp.","logo":"https://example.com/img/logo-invoice.png","number":1,"items":[{"name":"Starter plan","quantity":1,"unit_cost":99}],"notes":"Thanks for your business!"}' \
 > invoice.pdf
@@ -99,6 +102,7 @@ It is possible to change the localization used to generate the invoice by supply
 
 ```bash
 curl https://invoice-generator.com \
+  -H "Authorization: Bearer myApiKey" \
   -H "Accept-Language: fr-FR" \
   -d from="Nikolaus Ltd" \
   -d to="Acme Corp." \
@@ -121,6 +125,7 @@ We currently have translations available in English, French, German, Spanish, an
 
 ```bash
 curl https://invoice-generator.com \
+  -H "Authorization: Bearer myApiKey" \
   -d from="Nikolaus Ltd" \
   -d to="My Customer" \
   -d ship_to="Shipping Address" \
@@ -141,6 +146,7 @@ Here's a simple cURL example for generating e-invoices in UBL XML:
 
 ```bash
 curl https://invoice-generator.com/ubl \
+  -H "Authorization: Bearer myApiKey" \
   -d from="Nikolaus Ltd%0AVAT ID: 1234" \
   -d to="Foster Moen%0AVAT ID: 4567" \
   -d logo="https://example.com/img/logo-invoice.png" \
